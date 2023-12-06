@@ -1,6 +1,10 @@
+using Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebUserInterface.Data;
+using AutoMapper;
+using WebUserInterface.Models;
+using Domain.Entities;
 
 namespace WebUserInterface
 {
@@ -19,6 +23,8 @@ namespace WebUserInterface
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IPropertyRepository, DummyPropertyRepository>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
 
@@ -38,6 +44,8 @@ namespace WebUserInterface
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            
 
             app.UseAuthentication();
             app.UseAuthorization();

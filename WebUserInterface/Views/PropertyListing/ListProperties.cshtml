@@ -2,14 +2,15 @@
 
 @{
 }
+@await Component.InvokeAsync("TopMenu")
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <partial name="_PropertyCard" model="item"></partial>
+    }
+</div>
 
-@foreach(var item in Model)
+@if(ViewData["title"] is not null)
 {
-    <div>
-        <h4>@item.Name</h4>
-        <p>@item.Blurb</p>
-        <p>@item.Location</p>
-        <p>@item.CostPerNight</p>
-        <a asp-controller="PropertyListing" asp-action="ViewPropertyDetails" asp-route-id="@item.Id">Details</a>
-    </div>
+    <p>@ViewData["title"]</p>
 }

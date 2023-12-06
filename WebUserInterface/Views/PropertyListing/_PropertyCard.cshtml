@@ -1,0 +1,15 @@
+﻿@model PropertyDetailsModel
+@{
+}
+<div class="card col-md-4 m-2 p-0" style="width: 18rem;">
+    <img src="https://placehold.co/600x400" class="card-img-top" alt="">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Blurb</p>
+        <span>@Model.Location</span>
+    </div>
+    <div class="card-footer d-flex align-items-center">
+        <span class="align-items-center">Cost: @Model.CostPerNight</span>
+        <a class="btn btn-primary ms-auto" asp-controller="PropertyListing" asp-action="ViewPropertyDetails" asp-route-id="@Model.Id">Details</a>
+    </div>
+</div>

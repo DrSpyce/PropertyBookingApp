@@ -1,53 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Domain.Entities;
+using Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebUserInterface.Models;
 
 namespace WebUserInterface.Controllers
 {
     public class PropertyListingController : Controller
     {
+        private readonly IPropertyRepository propertyRepository;
+        private readonly IMapper mapper;
+
+        public PropertyListingController(IPropertyRepository PropertyRepository, IMapper Mapper)
+        {
+            propertyRepository = PropertyRepository;
+            mapper = Mapper;
+        }
+
         public IActionResult ListAll()
         {
-            return View("ListProperties", properties);
+            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(propertyRepository.Properties);
+            return View("ListProperties", model);
         }
 
         public IActionResult ListAvailable(DateTime start, DateTime end)
         {
-            return View("ListProperties", properties);
+            var result = propertyRepository.Properties.Where(p => p.BookedDates is null || !(p.BookedDates[0] < end && p.BookedDates[1] > start));
+            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(result);
+            ViewData["title"] = "List Available";
+            return View("ListProperties", model);
         }
 
         [HttpGet]
         public IActionResult ViewPropertyDetails(int id) 
         {
-            var model = properties.Where(p => p.Id == id).First();
+            var result = propertyRepository.Properties.Where(p => p.Id == id).First();
+            var model = mapper.Map<PropertyDetailsModel>(result);
             return View("PropertyDetails", model);
         }
-
-        private static List<PropertyDetailsModel> properties = new()
-        {
-            new ()
-            {
-                Id = 1,
-                Name = "Rose Cottage",
-                Blurb = "Beautiful cottage on the Cornwall coast",
-                Location = "Cornwall",
-                NumberOfBedrooms = 3,
-                CostPerNight = 350,
-                Decription = "Ultra-comfortable apartment",
-                Amenities = new List<string>{"WiFi", "Bath", "Good view"},
-                BookedDates = null,
-            },
-            new ()
-            {
-                Id = 2,
-                Name = "Safron House",
-                Blurb = "Stately home on the Devon moores",
-                Location = "Devon",
-                NumberOfBedrooms = 7,
-                CostPerNight = 730,
-                Decription = "Ultra-comfortable apartment",
-                Amenities = new List<string>{ "Bath", "Good view"},
-                BookedDates = new List<DateTime>{DateTime.Now, new DateTime(2023, 12, 31)},
-            },
-        };
     }
 }
