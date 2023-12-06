@@ -8,6 +8,7 @@ namespace WebUserInterface.Models
         public MappingProfile()
         {
             CreateMap<PropertyDetailsModel, Property>().ReverseMap();
+            CreateMap<BookedDateModel, BookedDate>().ReverseMap();
         }
     }
 }

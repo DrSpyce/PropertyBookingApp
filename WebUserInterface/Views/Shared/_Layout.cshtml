@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebUserInterface.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/jquery-date-range-picker-master/dist/daterangepicker.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 </head>
 <body>
     <header>
@@ -44,10 +47,14 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment.js"></script>
+
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
             integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c="
             crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/lib/jquery-date-range-picker-master/dist/jquery.daterangepicker.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

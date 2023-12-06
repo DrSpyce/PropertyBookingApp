@@ -1,0 +1,36 @@
+﻿@model PropertyDetailsModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form asp-controller="PropertyManagement" asp-action="Register" method="post">
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.Name"></label>
+        <input class="form-text" type="text" asp-for="@Model.Name" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.Blurb"></label>
+        <input class ="form-text" type="text" asp-for="@Model.Blurb" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.Location"></label>
+        <input class="form-text" type="text" asp-for="@Model.Location" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.NumberOfBedrooms"></label>
+        <input class="form-text" type="number" asp-for="@Model.NumberOfBedrooms" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.CostPerNight"></label>
+        <input class="form-text" type="number" asp-for="@Model.CostPerNight" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="@Model.Decription"></label>
+        <input class="form-text" type="text" asp-for="@Model.Decription" />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+
+? Amenities

@@ -9,7 +9,19 @@ namespace Domain.Repositories
 {
     public class DummyPropertyRepository : IPropertyRepository
     {
-        public IEnumerable<Property> Properties => properties;
+        public IEnumerable<Property> GetProperties => properties;
+
+        public IEnumerable<Property> GetAvailableProperties(DateTime start, DateTime end)
+        {
+            return properties.Where(p => 
+                p.BookedDates is null ||
+                !p.BookedDates!.Any(d => d.Start < end && d.End > start));
+        }
+
+        public Property GetProperty(int id)
+        {
+            return properties.Where(p => p.Id == id).First();
+        }
 
         private static List<Property> properties = new()
         {
@@ -22,7 +34,11 @@ namespace Domain.Repositories
                 NumberOfBedrooms = 3,
                 CostPerNight = 350,
                 Decription = "Ultra-comfortable apartment",
-                Amenities = new List<string>{"WiFi", "Bath", "Good view"},
+                Amenities = new List<Amenity>
+                {
+                    new Amenity() {Id = 1, Name = "Wifi"},
+                    new Amenity() {Id = 2, Name = "Comfortable bed"}
+                },
                 BookedDates = null,
             },
             new ()
@@ -34,9 +50,20 @@ namespace Domain.Repositories
                 NumberOfBedrooms = 7,
                 CostPerNight = 730,
                 Decription = "Ultra-comfortable apartment",
-                Amenities = new List<string>{ "Bath", "Good view"},
-                BookedDates = new List<DateTime>{DateTime.Now, new DateTime(2023, 12, 31)},
+                Amenities = new List<Amenity>
+                {
+                    new Amenity() {Id = 1, Name = "Wifi"},
+                    new Amenity() {Id = 2, Name = "Comfortable bed"}
+                },
+                BookedDates = new List<BookedDate>
+                {
+                    new BookedDate() { Start = new DateTime(2024, 1, 1), End = new DateTime(2024, 1, 20) },
+
+                    new BookedDate() { Start = DateTime.Now, End = new DateTime(2023, 12, 25) }
+                },
             },
         };
+
+        
     }
 }

@@ -1,0 +1,25 @@
+﻿@model PropertyDetailsModel
+@{
+}
+
+<div>
+    <h4>@Model.Name</h4>
+    <p>@Model.Blurb</p>
+    <p>@Model.Location</p>
+    <p>@Model.CostPerNight</p>
+    <p>@Model.Decription</p>
+    <p>
+        @foreach (var item in Model.Amenities)
+        {
+            <span><b>@item.Name</b></span>
+        }
+    </p>
+    @if (Model.BookedDates is not null)
+    {
+        @for (int i = 0; i < Model.BookedDates.Count; i++)
+        {
+            <p hidden id="start/@i">@Model.BookedDates[i].Start.ToString("yyyy'-'MM'-'dd")</p>
+            <p hidden id="end/@i">@Model.BookedDates[i].End.ToString("yyyy'-'MM'-'dd")</p>
+        }
+    }
+</div>

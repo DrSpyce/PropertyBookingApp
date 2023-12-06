@@ -9,6 +9,9 @@ namespace Domain.Repositories
 {
     public interface IPropertyRepository
     {
-        IEnumerable<Property> Properties { get; }
+        IEnumerable<Property> GetProperties { get; }
+        IEnumerable<Property> GetAvailableProperties(DateTime start, DateTime end);
+
+        Property GetProperty(int id);
     }
 }

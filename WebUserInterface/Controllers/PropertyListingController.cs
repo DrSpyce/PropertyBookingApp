@@ -18,15 +18,19 @@ namespace WebUserInterface.Controllers
         }
 
         public IActionResult ListAll()
-        {
-            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(propertyRepository.Properties);
+        { 
+            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(propertyRepository.GetProperties);
             return View("ListProperties", model);
         }
 
         public IActionResult ListAvailable(DateTime start, DateTime end)
         {
-            var result = propertyRepository.Properties.Where(p => p.BookedDates is null || !(p.BookedDates[0] < end && p.BookedDates[1] > start));
-            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(result);
+            var result = propertyRepository.GetAvailableProperties(start, end);
+            IEnumerable<PropertyDetailsModel>? model = null;
+            if(result is not null)
+            {
+                model = mapper.Map<IEnumerable<PropertyDetailsModel>>(result);
+            }
             ViewData["title"] = "List Available";
             return View("ListProperties", model);
         }
@@ -34,8 +38,12 @@ namespace WebUserInterface.Controllers
         [HttpGet]
         public IActionResult ViewPropertyDetails(int id) 
         {
-            var result = propertyRepository.Properties.Where(p => p.Id == id).First();
-            var model = mapper.Map<PropertyDetailsModel>(result);
+            var result = propertyRepository.GetProperty(id);
+            PropertyDetailsModel? model = null;
+            if (result is not null)
+            {
+                model = mapper.Map<PropertyDetailsModel>(result);
+            }
             return View("PropertyDetails", model);
         }
     }

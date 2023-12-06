@@ -1,0 +1,8 @@
+﻿@model BookedDateModel
+@{
+}
+
+<form method="post" asp-controller="Booking" asp-action="Book" id="BookForm">
+    <input type="date" hidden asp-for="Start" id="formStart"/>
+    <input type="date" hidden asp-for="End" id="formEnd"/>
+</form>
