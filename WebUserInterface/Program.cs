@@ -5,6 +5,7 @@ using Domain.Data;
 using AutoMapper;
 using WebUserInterface.Models;
 using Domain.Entities;
+using Microsoft.Extensions.Options;
 
 namespace WebUserInterface
 {
@@ -20,14 +21,26 @@ namespace WebUserInterface
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(
+                options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequiredUniqueChars = 0;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IPropertyRepository, EfPropertyRepository>();
+            builder.Services
+                .AddScoped<IPropertyRepository, EfPropertyRepository>()
+                .AddScoped<IBookingRepository, EfBookingRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
-            
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -48,6 +61,7 @@ namespace WebUserInterface
             using (var scope = app.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
                 if (!context.Properties.Any())
                 {
                     Seeder.SeedData(context);

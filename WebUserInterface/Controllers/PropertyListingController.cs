@@ -19,17 +19,17 @@ namespace WebUserInterface.Controllers
 
         public IActionResult ListAll()
         { 
-            var model = mapper.Map<IEnumerable<PropertyDetailsModel>>(propertyRepository.GetProperties);
+            var model = mapper.Map<IEnumerable<PropertyModel>>(propertyRepository.GetProperties);
             return View("ListProperties", model);
         }
 
         public IActionResult ListAvailable(DateTime start, DateTime end)
         {
             var result = propertyRepository.GetAvailableProperties(start, end);
-            IEnumerable<PropertyDetailsModel>? model = null;
+            IEnumerable<PropertyModel>? model = null;
             if(result is not null)
             {
-                model = mapper.Map<IEnumerable<PropertyDetailsModel>>(result);
+                model = mapper.Map<IEnumerable<PropertyModel>>(result);
             }
             ViewData["title"] = "List Available";
             return View("ListProperties", model);
@@ -39,10 +39,10 @@ namespace WebUserInterface.Controllers
         public IActionResult ViewPropertyDetails(int id) 
         {
             var result = propertyRepository.GetProperty(id);
-            PropertyDetailsModel? model = null;
+            PropertyModel? model = null;
             if (result is not null)
             {
-                model = mapper.Map<PropertyDetailsModel>(result);
+                model = mapper.Map<PropertyModel>(result);
             }
             return View("PropertyDetails", model);
         }

@@ -13,12 +13,20 @@ namespace Domain.Data
         public static void SeedData(ApplicationDbContext context)
         {
             context.Amenities.AddRange(amenities);
-            properties[0].Amenities.Add(amenities[0]);
-            properties[0].Amenities.Add(amenities[1]);
-            properties[1].Amenities.Add(amenities[1]);
-            properties[1].Amenities.Add(amenities[2]);
-            properties[0].BookedDates.Add(bookedDates[0]);
-            context.Properties.AddRange(properties);
+
+            bookedDates[0].Property = properties[0];
+            bookedDates[1].Property = properties[1];
+
+            context.Booking.AddRange(bookedDates);
+
+            properties?[0].Amenities?.Add(amenities[0]);
+            properties?[0].Amenities?.Add(amenities[1]);
+            properties?[1].Amenities?.Add(amenities[1]);
+            properties?[1].Amenities?.Add(amenities[2]);
+            if(properties is not null)
+            {
+                context.Properties.AddRange(properties);
+            }
             context.SaveChanges();
         }
 
@@ -34,7 +42,7 @@ namespace Domain.Data
             new ()
             {
                 Name = "Rose Cottage",
-                Blurb = "Beautiful cottage on the Cornwall coast",
+                Blurb = "Beautiful cottage on the Cornwall c//oast",
                 Location = "Cornwall",
                 NumberOfBedrooms = 3,
                 CostPerNight = 350,
@@ -51,12 +59,22 @@ namespace Domain.Data
             },
         };
 
-        private static List<BookedDate> bookedDates = new List<BookedDate>()
+        private static List<Booking> bookedDates = new List<Booking>()
         {
-            new BookedDate() { Start = new DateTime(2024, 1, 1), End = new DateTime(2024, 1, 20) },
-            new BookedDate() { Start = DateTime.Now, End = new DateTime(2023, 12, 25) }
+            new Booking() 
+            {
+                BillingAddress = "Cornwall billing address",
+                CostPerNight = 350,
+                Start = new DateTime(2024, 1, 1), 
+                End = new DateTime(2024, 1, 20) 
+            },
+            new Booking()
+            {
+                BillingAddress = "Safron billing address",
+                CostPerNight = 730,
+                Start = DateTime.Now,
+                End = new DateTime(2023, 12, 25)
+            },
         };
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿@model PropertyDetailsModel
+﻿@model PropertyModel
 @{
     
 }
@@ -15,12 +15,12 @@
             <span><b>@item.Name</b></span>
         }
     </p>
-    @if (Model.BookedDates is not null)
+    @if (Model.Booking is not null)
     {
-        @for (int i = 0; i < Model.BookedDates.Count; i++)
+        @for (int i = 0; i < Model.Booking.Count; i++)
         {
-            <p hidden id="start/@i">@Model.BookedDates[i].Start.ToString("yyyy'-'MM'-'dd")</p>
-            <p hidden id="end/@i">@Model.BookedDates[i].End.ToString("yyyy'-'MM'-'dd")</p>
+            <p hidden id="start/@i">@Model.Booking[i].Start.ToString("yyyy'-'MM'-'dd")</p>
+            <p hidden id="end/@i">@Model.Booking[i].End.ToString("yyyy'-'MM'-'dd")</p>
         }
     }
 </div>

@@ -23,7 +23,7 @@ namespace WebUserInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(PropertyDetailsModel pdModel)
+        public IActionResult Register(PropertyModel pdModel)
         {
             return View();
         }

@@ -1,9 +1,16 @@
-﻿@model BookedDateModel
+﻿@model BookingModel
 @{
 }
 
 <form method="post" asp-controller="Booking" asp-action="Book" id="BookForm">
     <input type="date" hidden asp-for="Start" id="formStart"/>
     <input type="date" hidden asp-for="End" id="formEnd"/>
-    <input type="number" name="Id" hidden value="@ViewData["ModelId"]" />
+    <input type="text" hidden asp-for="UserId" id="UserId" value="@Model.UserId" />
+    <input hidden asp-for="PropertyId" id="PropertyId" value="@Model.PropertyId" />
+    <input hidden asp-for="CostPerNight" id="CostPerNight" value="@Model.CostPerNight"/>
+    <div class="mb-3">
+        <label class="form-label" hidden id="BillingAddressLabel" for="exampleCheck1">Write your billing address</label>
+        <input class="form-control w-50" asp-for="BillingAddress" id="BillingAddress" hidden />
+    </div>
+    <button class="btn btn-primary" hidden id="submitButton">Submit</button>
 </form>

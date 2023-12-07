@@ -1,0 +1,13 @@
+﻿@model BookingModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h4>Booking succesfull</h4>
+<p>Your billing address @Model.BillingAddress</p>
+<p>Start date @Model.Start.ToString("yyyy'-'MM'-'dd")</p>
+<p>End date @Model.End.ToString("yyyy'-'MM'-'dd")</p>
+<p>Property name @Model.PropertyModel.Name</p>
+<p>Property address @Model.PropertyModel.Location</p>

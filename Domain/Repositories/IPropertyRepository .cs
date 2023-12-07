@@ -12,6 +12,5 @@ namespace Domain.Repositories
         IEnumerable<Property> GetProperties { get; }
         IEnumerable<Property> GetAvailableProperties(DateTime start, DateTime end);
         Property GetProperty(int id);
-        void BookDates(BookedDate bookedDate, int id);
     }
 }

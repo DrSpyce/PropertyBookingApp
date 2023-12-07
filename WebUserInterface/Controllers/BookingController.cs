@@ -8,20 +8,23 @@ namespace WebUserInterface.Controllers
 {
     public class BookingController : Controller
     {
-        private readonly IPropertyRepository propertyRepository;
+        private readonly IBookingRepository bookingRepository;
         private readonly IMapper mapper;
 
-        public BookingController(IPropertyRepository PropertyRepository, IMapper Mapper)
+        public BookingController
+            (IBookingRepository BookingRepository, IMapper Mapper)
         {
-            propertyRepository = PropertyRepository;
+            bookingRepository = BookingRepository;
             mapper = Mapper;
         }
 
         [HttpPost]
-        public IActionResult Book(BookedDateModel date, int Id)
+        public IActionResult Book(BookingModel date)
         {
-            propertyRepository.BookDates(mapper.Map<BookedDate>(date), Id);
-            return RedirectToAction("ListAll", controllerName: "PropertyListing");
+            var result = bookingRepository.MakeBooking(mapper.Map<Booking>(date), date.PropertyId);
+            var bookingModel = mapper.Map<BookingModel>(result);
+            bookingModel.PropertyModel = mapper.Map<PropertyModel>(result.Property);
+            return View(bookingModel);
         }
     }
 }
