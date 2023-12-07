@@ -5,4 +5,5 @@
 <form method="post" asp-controller="Booking" asp-action="Book" id="BookForm">
     <input type="date" hidden asp-for="Start" id="formStart"/>
     <input type="date" hidden asp-for="End" id="formEnd"/>
+    <input type="number" name="Id" hidden value="@ViewData["ModelId"]" />
 </form>

@@ -13,9 +13,18 @@ namespace Domain.Repositories
 
         public IEnumerable<Property> GetAvailableProperties(DateTime start, DateTime end)
         {
-            return properties.Where(p => 
+            return properties.Where(p =>
                 p.BookedDates is null ||
                 !p.BookedDates!.Any(d => d.Start < end && d.End > start));
+        }
+
+        public void BookDates(BookedDate bookedDate, int id)
+        {
+            var result = properties?.Where(p => p.Id == id).First();
+            if(result is not null)
+            {
+                result.BookedDates.Add(bookedDate);
+            }
         }
 
         public Property GetProperty(int id)
@@ -39,7 +48,7 @@ namespace Domain.Repositories
                     new Amenity() {Id = 1, Name = "Wifi"},
                     new Amenity() {Id = 2, Name = "Comfortable bed"}
                 },
-                BookedDates = null,
+                BookedDates = new List<BookedDate>(),
             },
             new ()
             {
@@ -64,6 +73,6 @@ namespace Domain.Repositories
             },
         };
 
-        
+
     }
 }
