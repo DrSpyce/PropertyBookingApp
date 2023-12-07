@@ -15,7 +15,7 @@ namespace Domain.Entities
         public int NumberOfBedrooms { get; set; }
         public decimal CostPerNight { get; set; }
         public string? Decription { get; set; }
-        public List<Amenity>? Amenities { get; set; }
-        public List<BookedDate>? BookedDates { get; set; }
+        public List<Amenity>? Amenities { get; } = new();
+        public List<BookedDate>? BookedDates { get; } = new();
     }
 }

@@ -1,7 +1,7 @@
 using Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebUserInterface.Data;
+using Domain.Data;
 using AutoMapper;
 using WebUserInterface.Models;
 using Domain.Entities;
@@ -23,11 +23,11 @@ namespace WebUserInterface
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IPropertyRepository, DummyPropertyRepository>();
+            builder.Services.AddScoped<IPropertyRepository, EfPropertyRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -45,7 +45,14 @@ namespace WebUserInterface
 
             app.UseRouting();
 
-            
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                if (!context.Properties.Any())
+                {
+                    Seeder.SeedData(context);
+                }
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
